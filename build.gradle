@@ -1,26 +1,24 @@
 buildscript {
     repositories {
-        jcenter()
-        mavenCentral()
         google()
+        mavenCentral()
     }
     dependencies {
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.0'
-        classpath 'com.android.tools.build:gradle:3.0.1'
+        classpath 'com.android.tools.build:gradle:7.4.2'
     }
 }
 
 apply plugin: 'com.android.library'
-apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'maven-publish'
 
 group='com.github.spacen'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion '26.0.2'
+    namespace 'com.github.martoreto.opuscodec'
+    compileSdkVersion 33
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 25
+        targetSdkVersion 33
         consumerProguardFiles 'proguard-rules.pro'
         externalNativeBuild {
             ndkBuild {
@@ -47,8 +45,22 @@ android {
 
 repositories {
     google()
+    mavenCentral()
 }
 
 dependencies {
-    implementation 'com.android.support:support-annotations:27.0.2'
+    implementation 'androidx.annotation:annotation:1.7.1'
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                groupId = 'com.github.spacen'
+                artifactId = 'opuscodec'
+
+                artifact bundleReleaseAar
+            }
+        }
+    }
 }
