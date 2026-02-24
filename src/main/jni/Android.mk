@@ -3,6 +3,7 @@ LOCAL_PATH := $(call my-dir)
 include $(CLEAR_VARS)
 
 LOCAL_LDLIBS := -llog
+LOCAL_LDFLAGS := -Wl,-z,max-page-size=16384 # @bryan이 추가
 
 LOCAL_MODULE:= senz
 
